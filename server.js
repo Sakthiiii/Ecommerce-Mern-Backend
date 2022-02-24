@@ -8,10 +8,10 @@ var fs = require('fs');
 var path = require('path');
 const dotenv = require("dotenv");
 const morgan = require('morgan');
-var cors = require('cors')
+
 dotenv.config()
 
-app.use(cors());
+
 app.use(bodyParser.json())
 app.use(cors())
 app.use(
@@ -20,10 +20,6 @@ app.use(
     })
 )
 
-app.get ("/",(req,res)=>{
-    req.send ("Hello sakthi");
-    console.log("hello boy")
-});
 
 const connection = "mongodb+srv://ecommercenshop:don654321@cluster0.z5fo7.mongodb.net/ecommercenshop?retryWrites=true&w=majority";
 mongoose.connect(process.env.MONGODB_URL || connection, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
@@ -44,10 +40,10 @@ app.use('/products', Products);
 app.use('/shippings', Shippings);
 app.use('/payment', Payments);
 
-if (process.env.NODE_ENV === 'production') {
-
-    app.use(express.static('client/build'));
-}
+app.use(express.static(path.join(__dirname,"/client/build")));
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,"/cient/build","index.html"));
+})
 app.use(morgan('tiny'));
 
 app.listen(port, function () {
