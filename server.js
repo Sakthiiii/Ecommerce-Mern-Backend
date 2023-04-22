@@ -21,7 +21,7 @@ app.use(
 )
 
 
-const connection = "mongodb+srv://dietapp:dietapp@cluster0.lmxqm.mongodb.net/dietapp?retryWrites=true&w=majority";
+//const connection = "mongodb+srv://dietapp:dietapp@cluster0.lmxqm.mongodb.net/dietapp?retryWrites=true&w=majority";
 mongoose.connect(process.env.MONGODB_URL || connection, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => console.log("Database Connected Successfully"))
     .catch(err => console.log(err));
@@ -40,12 +40,22 @@ app.use('/products', Products);
 app.use('/shippings', Shippings);
 app.use('/payment', Payments);
 
-app.use(express.static(path.join(__dirname,"/client/build")));
-app.get("*",(req,res)=>{
-    res.sendFile(path.join(__dirname,"/cient/build","index.html"));
-})
+//app.use(express.static(path.join(__dirname,"/client/build")));
+// app.get("*",(req,res)=>{
+//     res.sendFile(path.join(__dirname,"/cient/build","index.html"));
+// })
+   
+app.use(express.static(__dirname + '/dist/eshop'));
+
+app.post('/*', function(req, res){
+    res.sendFile(__dirname +  '/dist/eshop/index.html');
+});
+
 app.use(morgan('tiny'));
 
+app.use('/',(req,res)=>{
+    res.send("server running");
+})
 app.listen(port, function () {
     console.log('Server is running on port: ' + port)
 })
