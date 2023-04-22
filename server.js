@@ -22,7 +22,7 @@ app.use(
 
 
 //const connection = "mongodb+srv://dietapp:dietapp@cluster0.lmxqm.mongodb.net/dietapp?retryWrites=true&w=majority";
-mongoose.connect(process.env.MONGODB_URL || connection, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+mongoose.connect(process.env.MONGODB_URL , { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => console.log("Database Connected Successfully"))
     .catch(err => console.log(err));
 
